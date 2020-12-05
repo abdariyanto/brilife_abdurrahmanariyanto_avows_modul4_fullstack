@@ -48,29 +48,21 @@
 
                             </thead>
                             <tbody>
-                                <?php $no = 1;
-                                foreach ($query->result() as $row) { ?>
+                                <?php $no = 1;?>
+                                <?php foreach ($query as $row) { ?>
                                     <tr>
-                                        <td class="text-center"><?= $no++ ?></td>
-                                        <td class="text-center"><?= $row->wilayah_kerja ?></td>
+                                        <td class="text-center"><?= $no ?></td>
+                                        <td class="text-center"><?= $row['wilayah']?></td>
+                                        <td class="text-center"><?= $row['RM'] ?></td>
+                                        <td class="text-center"><?= $row['SM'] ?></td>
+                                        <td class="text-center"><?= $row['UM'] ?></td>
+                                        <td class="text-center"><?= $row['FU'] ?></td>
                                         
-                                        <td class="text-center"><?php if ($row->id_agen_level == '4') {
-                                                                    echo $row->nama_agen;
-                                                                } ?></td>
-                                        <td class="text-center"><?php if ($row->id_agen_level == '3') {
-                                                                    echo $row->nama_agen;
-                                                                } ?></td>
-                                        <td class="text-center"><?php if ($row->id_agen_level == '2') {
-                                                                    echo $row->nama_agen;
-                                                                } ?></td>
-                                        <td class="text-center"><?php if ($row->id_agen_level == '1') {
-                                                                    echo $row->nama_agen;
-                                                                } ?></td>
                                     </tr>
                                     <tr>
 
                                     </tr>
-                                <?php } ?>
+                                <?php $no++;} ?>
                             </tbody>
                         </table>
                     </div>

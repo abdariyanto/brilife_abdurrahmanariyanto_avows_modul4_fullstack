@@ -189,19 +189,45 @@ class Form extends CI_Controller
 		if ($data['wilayah_kerja'] != '') {
 			$this->db->where('wilayah_kerja', $data['wilayah_kerja']);
 		}
-		if ($data['status'] != '') {
-			$this->db->where('status', $data['status']);
-		}
-
-		$data['query_count']	= $this->db->query($this->db->get_compiled_select('dbo_agen', FALSE));
-
-		$suffix 				= "?wilayah_kerja=" . $data['wilayah_kerja'] . "&status=" . $data['status'];
-
-		$data['query']	= $this->db->query($this->db->get_compiled_select());
-
+		
+		//ambil data wilayah kerja
 		$this->db->select('wilayah_kerja');
 		$this->db->group_by('wilayah_kerja');
 		$data['wilayah_kerja'] = $this->db->get('dbo_agen');
+
+		//ambil data level dari db dbo_agen_level
+		$getLevel = $this->db->get('dbo_agen_level');
+
+		//buat array kosong untuk di push nanti
+		$arrayKosong = array();
+
+		//looping wilayahkerja untuk dimasukin ke array nanti
+		foreach($data['wilayah_kerja']->result() as $row){
+
+			//kondisi buat searching status
+			if ($data['status'] != '') {
+				$this->db->where('status', $data['status']);
+			}
+
+			//array isi wilayah untuk dipush nanti
+			$arrayIsi = array(
+				'wilayah' => $row->wilayah_kerja,
+			);
+
+			//looping level untuk ambil data dari dbo_agen biar dapet level dan wilayah kerjanya
+			foreach($getLevel->result() as $level){
+				$this->db->where('id_agen_level',$level->id);
+				$this->db->where('wilayah_kerja',$row->wilayah_kerja);
+				$getData = $this->db->get('dbo_agen');
+
+				if($getData->num_rows() > 0){
+					$arrayIsi[$level->level] = $getData->row()->nama_agen;
+				}
+			}
+			array_push($arrayKosong,$arrayIsi);
+		}
+		$data['query'] = $arrayKosong;
+		// print_r($data['query']);die();
 
 		$data2['isi'] = $this->load->view('report_agen', $data, true);
 		$this->load->view('main_view', $data2);
