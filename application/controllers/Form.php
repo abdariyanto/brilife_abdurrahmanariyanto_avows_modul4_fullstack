@@ -140,8 +140,8 @@ class Form extends CI_Controller
 		if ($this->form_validation->run() == TRUE) {
 			$nama_agen = $this->input->post('nama_agen');
 			$atasan = $this->input->post('atasan');
-			$berlaku_mulai = $this->input->post('berlaku_mulai');
-			$berlaku_akhir = $this->input->post('berlaku_akhir');
+			$berlaku_mulai = strtotime($this->input->post('berlaku_mulai'));
+			$berlaku_akhir = strtotime($this->input->post('berlaku_akhir'));
 			$status = $this->input->post('status');
 			if ($nama_agen == '4') {
 				$this->session->set_flashdata('msg', '<div class="alert
@@ -160,8 +160,8 @@ class Form extends CI_Controller
 			$create = array(
 				'id_agen' => $nama_agen,
 				'parent_id' => $atasan,
-				'berlaku_mulai' => $berlaku_mulai,
-				'berlaku_akhir' => $berlaku_akhir,
+				'berlaku_mulai' => date("Y-m-d H:i:ss", $berlaku_mulai),
+				'berlaku_akhir' => date("Y-m-d H:i:ss", $berlaku_akhir),
 				'status' => $status_aktif,
 			);
 
