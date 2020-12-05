@@ -53,6 +53,7 @@
                                     <tr>
                                         <td class="text-center"><?= $no++ ?></td>
                                         <td class="text-center"><?= $row->wilayah_kerja ?></td>
+                                        
                                         <td class="text-center"><?php if ($row->id_agen_level == '4') {
                                                                     echo $row->nama_agen;
                                                                 } ?></td>

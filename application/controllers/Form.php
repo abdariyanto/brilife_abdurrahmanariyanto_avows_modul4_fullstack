@@ -164,8 +164,6 @@ class Form extends CI_Controller
 				'berlaku_akhir' => $berlaku_akhir,
 				'status' => $status_aktif,
 			);
-			print_r($create);
-			die();
 
 			$berhasil = $this->db->insert('dbo_agen_struktur', $create);
 			if ($berhasil) {
