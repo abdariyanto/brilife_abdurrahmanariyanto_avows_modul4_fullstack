@@ -199,14 +199,15 @@ class Form extends CI_Controller
 
 		$suffix 				= "?wilayah_kerja=" . $data['wilayah_kerja'] . "&status=" . $data['status'];
 
-
-
-
 		$data['query']	= $this->db->query($this->db->get_compiled_select());
 
 		$this->db->select('wilayah_kerja');
 		$this->db->group_by('wilayah_kerja');
 		$data['wilayah_kerja'] = $this->db->get('dbo_agen');
+		$data['country'] = array();
+		foreach ($this->db->get_where('dbo_agen')->result_array() as $row) {
+			$data['country'][$row['wilayah_kerja']][] = $row; //group rows by country
+		}
 
 
 		$data2['isi'] = $this->load->view('report_agen', $data, true);

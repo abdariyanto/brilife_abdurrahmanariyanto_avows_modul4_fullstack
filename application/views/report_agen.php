@@ -20,7 +20,7 @@
                         <input class="form-check-input" type="checkbox" name="status" value="1">
                     </div>
                 </div>
-                
+
                 <button type="submit" class="btn btn-primary mb-2">View</button>
             </form>
         </div>
