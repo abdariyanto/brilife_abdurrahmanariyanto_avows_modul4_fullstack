@@ -48,21 +48,21 @@
 
                             </thead>
                             <tbody>
-                                <?php $no = 1;?>
-                                <?php foreach ($query as $row) { ?>
+                                <?php $no = 1; ?>
+                                <?php foreach ($query as $row ) { ?>
                                     <tr>
-                                        <td class="text-center"><?= $no ?></td>
+                                        <td class="text-center"><?= $no++ ?></td>
                                         <td class="text-center"><?= $row['wilayah']?></td>
-                                        <td class="text-center"><?= $row['RM'] ?></td>
-                                        <td class="text-center"><?= $row['SM'] ?></td>
-                                        <td class="text-center"><?= $row['UM'] ?></td>
-                                        <td class="text-center"><?= $row['FU'] ?></td>
-                                        
-                                    </tr>
-                                    <tr>
+                                        <td class="text-center"><?= concat($row['RM']) ?></td>
+                                        <td class="text-center"><?= concat($row['SM']) ?></td>
+                                        <td class="text-center"><?= concat($row['UM']) ?></td>
+                                        <td class="text-center"><?= concat($row['FU']) ?></td>
 
                                     </tr>
-                                <?php $no++;} ?>
+                                <?php } ?>
+                                <tr>
+
+                                </tr>
                             </tbody>
                         </table>
                     </div>

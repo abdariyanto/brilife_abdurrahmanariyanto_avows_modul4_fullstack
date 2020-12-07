@@ -3,6 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Form extends CI_Controller
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->helper('concat');
+	}
 
 
 	public function index()
@@ -189,7 +194,7 @@ class Form extends CI_Controller
 		if ($data['wilayah_kerja'] != '') {
 			$this->db->where('wilayah_kerja', $data['wilayah_kerja']);
 		}
-		
+
 		//ambil data wilayah kerja
 		$this->db->select('wilayah_kerja');
 		$this->db->group_by('wilayah_kerja');
@@ -202,7 +207,7 @@ class Form extends CI_Controller
 		$arrayKosong = array();
 
 		//looping wilayahkerja untuk dimasukin ke array nanti
-		foreach($data['wilayah_kerja']->result() as $row){
+		foreach ($data['wilayah_kerja']->result() as $row) {
 
 			//kondisi buat searching status
 			if ($data['status'] != '') {
@@ -211,25 +216,38 @@ class Form extends CI_Controller
 
 			//array isi wilayah untuk dipush nanti
 			$arrayIsi = array(
-				'wilayah' => $row->wilayah_kerja,
+				'wilayah' => $row->wilayah_kerja
 			);
 
 			//looping level untuk ambil data dari dbo_agen biar dapet level dan wilayah kerjanya
-			foreach($getLevel->result() as $level){
-				$this->db->where('id_agen_level',$level->id);
-				$this->db->where('wilayah_kerja',$row->wilayah_kerja);
+			foreach ($getLevel->result() as $level) {
+				$this->db->where('id_agen_level', $level->id);
+				$this->db->where('wilayah_kerja', $row->wilayah_kerja);
 				$getData = $this->db->get('dbo_agen');
 
-				if($getData->num_rows() > 0){
-					$arrayIsi[$level->level] = $getData->row()->nama_agen;
+				if ($getData->num_rows() > 0) {
+					$arrayTambah = array();
+					foreach ($getData->result() as $gd) {
+						array_push($arrayTambah, $gd->nama_agen);
+					}
+					$arrayIsi[$level->level] = $arrayTambah;
 				}
 			}
-			array_push($arrayKosong,$arrayIsi);
+			
+			array_push($arrayKosong, $arrayIsi);
 		}
+		
 		$data['query'] = $arrayKosong;
-		// print_r($data['query']);die();
+
+			// print_r(json_encode($data['query']));
+			// die();
 
 		$data2['isi'] = $this->load->view('report_agen', $data, true);
 		$this->load->view('main_view', $data2);
+	}
+
+	function tester($array)
+	{
+
 	}
 }
