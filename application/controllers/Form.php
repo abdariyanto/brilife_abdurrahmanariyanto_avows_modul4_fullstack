@@ -188,7 +188,7 @@ class Form extends CI_Controller
 	}
 	public function report_agen()
 	{
-		$data['title'] = "Input Agen";
+		$data['title'] = "Report Agen";
 		$data['wilayah_kerja'] = $this->input->get('wilayah_kerja', true);
 		$data['status'] = $this->input->get('status', true);
 		if ($data['wilayah_kerja'] != '') {
